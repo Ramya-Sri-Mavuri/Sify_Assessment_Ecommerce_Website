@@ -1,0 +1,98 @@
+body{
+    background-color: rgba(0, 0, 0, 0.838);
+    color: black;
+}
+.search-bar {
+    position: relative;
+}
+
+.search-icon,
+ .btn-outline-success{
+    position: absolute;
+    top: 50%;
+    transform: translate(650%,-50%);
+    cursor: pointer;
+    border: none;
+}
+.search-icon,
+ .btn-outline-secondary{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 30px;
+    cursor: pointer;
+    border: none;
+}
+
+.form-control{
+    padding: 8%;    
+    padding-right: 100px; /* Adjust this value to leave space for the icons */
+}
+.form-inline{
+    padding-right: 7px;
+}
+.cart-icon{
+    padding-right: 25px;
+    padding-left: 10px;
+}
+.btn-outline-primary{
+    margin-right: 30px;
+}
+#items{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    color: black;
+    box-shadow: cornflowerblue;
+    margin-right:10px;
+}
+#items:hover {
+    box-shadow: 1px 1px 5px 5px lightblue;
+  }
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------ */
+/* Toolbar css */
+
+.toolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0c0c0c;
+    padding: 10px;
+    color: white;
+}
+
+.toolbar-item {
+    margin: 0 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.toolbar-item img {
+    width: 50px;
+    height: 50px;
+}
+
+.toolbar-submenu {
+    display: none;
+    position: absolute;
+    background-color: #f8f4f4;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.submenu-item {
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+/*------------------------------------------------------------------------------------------------------------------------------------ */
+/* Slideshow css */
+
+.carousel-inner{
+    height:550px;
+    width: 750px;
+    margin-top: 20px;
+    margin-left: 25%;
+}
