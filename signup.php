@@ -101,11 +101,11 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     
     // Check if the form submission was successful
     if (document.querySelector('.error').innerHTML.trim() === "") {
-        echo "";
-        window.alert("Registered successfully");
+        alert('Registred successfully');
         
         // Reset the form
         document.getElementById('registrationForm').reset();
+        window.location.href = 'index.php';
     }
 });
 </script>

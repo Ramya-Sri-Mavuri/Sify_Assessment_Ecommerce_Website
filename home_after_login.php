@@ -1,4 +1,16 @@
+<?php
+require 'products/connection.php';
+require 'vendor/autoload.php'; // Load JWT library
+use \Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
+// Check if JWT token exists
+if(!isset($_COOKIE['jwt_tokens'])){
+    header("Location: login.php");
+    exit();
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +43,7 @@
                 <a class="nav-link" href="contact.php">Contact</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0 mr-3">
+        <form action="search.php" method="get" class="form-inline my-2 my-lg-0 mr-3">
         <select name="items" id="items">
             <option value="none" selected>All Products</option>
             <option value="Electronics">Electronics</option>
@@ -41,7 +53,7 @@
             <option value="Beauty">Beauty</option>
 </select>
         <div class="search-bar">
-            <input class="form-control mr-sm-2" type="search" placeholder="Choose from all products" aria-label="Search" id="searchInput">
+            <input class="form-control mr-sm-2" type="search" placeholder="Choose from all products" aria-label="Search" id="searchInput" name="query">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
             <button class="btn btn-outline-secondary my-0 my-sm-0 ml-2" type="button" id="voiceSearchBtn"><i class="fas fa-microphone"></i></button>
         </div>
@@ -54,50 +66,63 @@
     </div>
 </nav>
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+<article >
+<section>
+    <div class="toolbar-above" style="background-color:Brown; color:white;font-size:20px;font-weight: bold;">
+    <marquee behavior="scroll" direction="left" scrollamount="8"><p>Check out our latest deals and products! Limited time offers available. Save big on electronics, fashion, home essentials, and more. <span style="color:white;">Don't miss out - shop now!<span></p></marquee>
+    </div>
+    </section>
+</article>
+
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 <article class="toolbar">
     <section>
     <div class="toolbar">
     <div class="toolbar-item" onclick="showCategory('electronics')">
-        <img src="electronics_icon.png" alt="Electronics">
-        <span>Electronics</span>
+    <a href="products/Electronics.php"><img src="https://m.media-amazon.com/images/G/31/img23/CEPC/BAU/ELP/navtiles/Cameras._CB574550011_.png" alt="Electronics"></a>
+        <span >Electronics</span>
     </div>
     <div class="toolbar-item" onclick="showCategory('mobiles')">
-        <img src="mobiles_icon.png" alt="Mobiles">
+    <a href="products/mobiles.php"><img src="https://m.media-amazon.com/images/I/61LB+d0vheL._AC_UL480_QL65_.jpg" alt="Mobiles"></a>
         <span>Mobiles</span>
     </div>
     <div class="toolbar-item" onclick="showCategory('clothes')">
-        <img src="clothes_icon.png" alt="Clothes">
+    <a href="products/fashion.php"><img src="https://m.media-amazon.com/images/G/31/img19/Fashion/DesktopSubnav/Updated/BWL.jpg" alt="Clothes"></a>
         <span>Fashion</span>
     </div>
-    <div class="toolbar-submenu" id="clothes-submenu">
-        <div class="submenu-item" onclick="showCategory('home-related')">
-            <span>Home Related</span>
+    <div class="toolbar-item" onclick="showCategory('home-related')">
+    <a href="products/fashion.php"><img src="https://m.media-amazon.com/images/I/51raPlJck9L._AC_SR155,154_QL70_.jpg" alt="Clothes"></a>
+            <span>Kids</span>
         </div>
-        <div class="submenu-item" onclick="showCategory('menware')">
+        <div class="toolbar-item" onclick="showCategory('menware')">
+        <a href="products/fashion.php"><img src="https://m.media-amazon.com/images/I/51zPqO-6MML._AC_UL480_FMwebp_QL65_.jpg" alt="Clothes"></a>
             <span>Menware</span>
         </div>
-        <div class="submenu-item" onclick="showCategory('womenware')">
+        <div class="toolbar-item" onclick="showCategory('womenware')">
+        <a href="products/fashion.php"><img src="https://m.media-amazon.com/images/I/51bMGRDl+eL._AC_UL480_FMwebp_QL65_.jpg" alt="Clothes"></a>
             <span>Womenware</span>
         </div>
-    </div>
     <div class="toolbar-item" onclick="showCategory('home')">
-        <img src="home_icon.png" alt="Home">
+    <a href="products/home_kitchen.php"><img src="https://m.media-amazon.com/images/I/71wq391f45L._AC_UY327_FMwebp_QL65_.jpg" alt="Home"></a>
         <span>Home</span>
     </div>
-    <div class="toolbar-submenu" id="home-submenu">
-        <div class="submenu-item" onclick="showCategory('utensils')">
+    <div class="toolbar-item" onclick="showCategory('utensils')">
+    <a href="products/home_kitchen.php"><img src="https://m.media-amazon.com/images/I/71bwxsfTaeL._AC_UL480_FMwebp_QL65_.jpg" alt="Home"></a>
             <span>Utensils</span>
         </div>
-        <div class="submenu-item" onclick="showCategory('sofas')">
+        <div class="toolbar-item" onclick="showCategory('sofas')">
+        <a href="products/home_kitchen.php"><img src="https://m.media-amazon.com/images/I/71wq391f45L._AC_UY327_FMwebp_QL65_.jpg" alt="Home"></a>
             <span>Sofas</span>
         </div>
-        <div class="submenu-item" onclick="showCategory('appliances')">
+        <div class="toolbar-item" onclick="showCategory('appliances')">
+        <a href="products/home_kitchen.php"><img src="https://m.media-amazon.com/images/I/51EkCd1UaCL._AC_UY327_FMwebp_QL65_.jpg" alt="Home"></a>
             <span>Appliances</span>
         </div>
-    </div>
+    
     <div class="toolbar-item" onclick="showCategory('beauty-products')">
-        <img src="beauty_icon.png" alt="Beauty Products">
-        <span>Beauty Products</span>
+    <a href="products/beauty.php"><img src="https://m.media-amazon.com/images/I/51o6iPJY-cL._AC_UL480_FMwebp_QL65_.jpg" alt="Beauty Products"></a>
+        <span>Beauty</span>
     </div>
 </div>
     </section>
@@ -105,7 +130,7 @@
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
 <article>
-    <section>
+    <section class="slides">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -116,22 +141,19 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="d-block w-100" src="Images/slide1.webp" alt="First slide" >
+      <a href="products/mobiles.php"><img class="d-block w-100" src="Images/Laptop_offer.jpg" alt="First slide" height="500" ></a>
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="Images/slide2.webp" alt="Second slide">
+    <a href="products/home_kitchen.php"><img class="d-block w-100" src="Images/h1 .jpg" alt="Third slide"></a>
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="Images/h1.jpeg" alt="Third slide">
+    <a href="products/Electronics.php"><img class="d-block w-100" src="Images/slide2.jpg" alt="Second slide" height="500"></a>
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="..." alt="Third slide">
+    <a href="products/beauty.php"><img class="d-block w-100" src="Images/slide4.jpg" alt="Third slide" height="500"></a>
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="..." alt="Forth slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="..." alt="Fifth slide">
+    <a href="products/fashion.php"><img class="d-block w-100" src="Images/slide5.jpg" alt="Forth slide" height="500"></a>
     </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -145,7 +167,6 @@
 </div>
     </section>
 </article>
-
 
 <!-- Bootstrap JS and dependencies -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

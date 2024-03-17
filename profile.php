@@ -36,6 +36,8 @@ if ($result->num_rows == 1) {
     // For now, we'll just set the user variable to an empty array
     $user = [];
 }
+if (!isset($_SESSION['logged_out'])) {
+    // User is not logged out, display the profile details
 ?>
 
 <!DOCTYPE html>
@@ -66,3 +68,10 @@ if ($result->num_rows == 1) {
     </div>
 </body>
 </html>
+<?php
+} else {
+    // User is logged out, redirect to login page
+    header("Location: login.php");
+    exit();
+}
+?>

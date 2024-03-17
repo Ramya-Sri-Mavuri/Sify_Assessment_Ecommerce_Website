@@ -1,3 +1,16 @@
+<?php
+  require 'connection.php';
+  require '../vendor/autoload.php'; // Load JWT library
+  use \Firebase\JWT\JWT;
+  use Firebase\JWT\Key;
+  
+  // Check if JWT token exists
+  if(!isset($_COOKIE['jwt_tokens'])){
+      header("Location: ../login.php");
+      exit();
+  }
+?>
+
 <html>
     <head>
         <link rel="stylesheet" href="data.css">

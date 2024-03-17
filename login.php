@@ -1,8 +1,89 @@
+
 <?php
 
-    require 'products/connection.php';
-    require 'vendor/autoload.php'; // Load JWT library
-    use \Firebase\JWT\JWT;
+session_start();
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: Sat, 1 Jan 2000 00:00:00 GMT");
+
+// Check if the user is already logged in
+if (isset($_COOKIE['jwt_tokens'])) {
+    // User is already logged in, redirect to home page
+    header("Location: home_after_login.php");
+    exit();
+}
+
+// Check if the session variable for logout is set
+if (isset($_SESSION['logged_out'])) {
+    // User has logged out, clear the session variable
+    unset($_SESSION['logged_out']);
+    header("Location: index.php");
+}
+
+require 'products/connection.php';
+require 'vendor/autoload.php'; // Load JWT library
+use \Firebase\JWT\JWT;
+
+function sanitize_input($input) {
+    return htmlspecialchars(stripslashes(trim($input)));
+}
+
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = sanitize_input($_POST["username"]);
+    $password = sanitize_input($_POST["pswrd"]);
+
+    $stmt = $conn->prepare("SELECT * FROM customer_details WHERE Username = ? OR Email = ? or Phno=?");
+    $stmt->bind_param("ssi", $username, $username,$username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        // Compare the user-provided password with the hashed password from the database
+        if ($password==$row["Password"]) {
+            // Password is correct, generate JWT token
+            $payload = array(
+                "user_id" => $row["Cid"],
+                "username" => $row["Username"]
+                // Add more user data as needed
+            );
+            $jwt = JWT::encode($payload, "hkhjs",'HS256');
+            $updateStmt = $conn->prepare("UPDATE customer_details SET jwt_tokens = ? WHERE Cid = ?");
+            $updateStmt->bind_param("si", $jwt, $row["Cid"]);
+            $updateStmt->execute();
+
+            // Send JWT token in response
+            echo "<script>window.localStorage.setItem('jwt_tokens', '$jwt');</script>";
+
+            // After generating JWT token
+            setcookie('jwt_tokens', $jwt, time() + (86400 * 30), "/"); // 86400 = 1 day
+
+            if (isset($_SESSION['search_query'])) {
+                $searchQuery = $_SESSION['search_query'];
+                header("Location: search_results.php?query=" . urlencode($searchQuery));
+                exit();
+            } else {
+                // Redirect to home_after_login.php if there's no stored search query
+                header("Location: home_after_login.php");
+                exit(); // Stop further execution of the script
+            }
+
+        } else {
+            // Incorrect password
+            echo "<script>window.alert('Invalid username or password');</script>";
+        }
+    } else {
+        // User not found
+        echo "<script>window.alert('User not found');</script>";
+    }
+
+    $stmt->close();
+}
+
+$conn->close();
 
 ?>
 
@@ -14,6 +95,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login page in HTML</title>
     <link rel="stylesheet" href="login.css">
+    <script>
+        history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', function () {
+            history.pushState(null, null, document.URL);
+        });
+    </script>
+    <script language="javascript" type="text/javascript">
+    window.history.forward();
+  </script>
+    
 </head>
 <body>
     <form action="" onsubmit="return sanitize_input()" method="post">
@@ -55,60 +146,5 @@
         </div>
 
     </form>
-<?php
-    function sanitize_input($input) {
-        return htmlspecialchars(stripslashes(trim($input)));
-    }
-    
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $username = sanitize_input($_POST["username"]);
-        $password = sanitize_input($_POST["pswrd"]);
-    
-        $stmt = $conn->prepare("SELECT * FROM customer_details WHERE Username = ? OR Email = ?");
-        $stmt->bind_param("ss", $username, $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-    
-        if ($result->num_rows == 1) {
-            $row = $result->fetch_assoc();
-            // Compare the user-provided password with the hashed password from the database
-            if ($password==$row["Password"]) {
-                // Password is correct, generate JWT token
-                $payload = array(
-                    "user_id" => $row["Cid"],
-                    "username" => $row["Username"]
-                    // Add more user data as needed
-                );
-                $jwt = JWT::encode($payload, "hkhjs",'HS256');
-                $updateStmt = $conn->prepare("UPDATE customer_details SET jwt_tokens = ? WHERE Cid = ?");
-                $updateStmt->bind_param("si", $jwt, $row["Cid"]);
-                $updateStmt->execute();
-    
-                // Send JWT token in response
-                echo "<script>window.localStorage.setItem('jwt_tokens', '$jwt');</script>";
-
-                // After generating JWT token
-                setcookie('jwt_tokens', $jwt, time() + (86400 * 30), "/"); // 86400 = 1 day
-
-                // Redirect to home_after_login.php
-                header("Location: home_after_login.php");
-                exit();
-
-                echo "<script>window.alert('Login successful');</script>";
-                echo "<script>window.location.href = 'home_after_login.php';</script>";
-            } else {
-                // Incorrect password
-                echo "<script>window.alert('Invalid username or password');</script>";
-            }
-        } else {
-            // User not found
-            echo "<script>window.alert('User not found');</script>";
-        }
-    
-        $stmt->close();
-    }
-    
-    $conn->close();
-?>
 </body>
 </html>
