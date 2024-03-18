@@ -23,7 +23,7 @@ if (isset($_SESSION['logged_out'])) {
 
 require 'products/connection.php';
 require 'vendor/autoload.php'; // Load JWT library
-use \Firebase\JWT\JWT;
+//use \Firebase\JWT\JWT;
 
 function sanitize_input($input) {
     return htmlspecialchars(stripslashes(trim($input)));
