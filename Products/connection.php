@@ -1,2 +1,2 @@
 <?php
-$conn=mysqli_connect("localhost","root","","ecommerce_megamall");
+$conn=mysqli_connect("localhost","root","","ecommerce_megamall_1");

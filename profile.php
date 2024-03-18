@@ -48,14 +48,23 @@ if (!isset($_SESSION['logged_out'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <div class="profile-container">
-        <h2>User Profile</h2>
+    <div class="profile">
+    <div class="profile-header">
+    <h2>User Profile</h2>
+           <i class='fa fa-user-circle-o' aria-hidden='true' style="font-size:55px"></i>
+            <h2 class="username"><?php echo $user["Username"]; ?></h2>
+        </div>
+    <div class="profile-info">
+        
         <!-- Display user details here -->
         <?php if (!empty($user)): ?>
             <p>Welcome, <?php echo $user["Username"]; ?>!</p>
+            <p>Fullname: <?php echo $user["Full_Name"]; ?></p>
             <p>Email: <?php echo $user["Email"]; ?></p>
+            <p>Mobile: <?php echo $user["Phno"]; ?></p>
             <!-- Add more user details as needed -->
         <?php else: ?>
             <p>Error: User details not found.</p>
@@ -63,11 +72,14 @@ if (!isset($_SESSION['logged_out'])) {
 
         <!-- Logout button -->
         <form action="logout.php" method="post">
-            <button type="submit">Logout</button>
+            <button type="submit" class="logout-btn">Logout</button>
         </form>
     </div>
+    </div>
 </body>
+
 </html>
+
 <?php
 } else {
     // User is logged out, redirect to login page

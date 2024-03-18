@@ -10,11 +10,16 @@ body{
     width: 100%;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    height:300px;
 }
 h1{
     text-align: center;
 }
-h1::before{
+.content h5{
+    color:purple;
+    height:200px;
+}
+/* h1::before{
     content: "";
     position: absolute;
     left: 630px;
@@ -24,14 +29,8 @@ h1::before{
     width: 250px;
     border-radius: 5px;
     background: black;
-  }
-.content a{
-    font-family:'Times New Roman', Times, serif;
-    font-size: 20px;
-    text-align: center;
-    color:purple;
-    text-decoration: none;
-}
+  } */
+
 .content p{
     font-size: 30px;
     font-weight: bold;
@@ -45,6 +44,9 @@ h1::before{
     background: white;
     padding: 10px;
     transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .content:hover{
     transform: scale(1.07);

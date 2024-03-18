@@ -59,12 +59,15 @@ if(!isset($_COOKIE['jwt_tokens'])){
         </div>
         </form>
         <div class="cart-icon">
-            <img src="Images/Cart.jpg" alt="cart-icon" height="40" width="50" >
+        <a href="products/cart.php"><img src="Images/Cart.jpg" alt="cart-icon" height="40" width="50" ></a>
         </div>
-        <a class="btn btn-outline-primary my-2 my-sm-0" type="button" href="profile.php">My Profile</a>
+        <!-- <a class="btn btn-outline-primary my-2 my-sm-0" type="button" href="profile.php">My Profile</a> -->
+        <button id="myProfileBtn" class="btn btn-outline-primary my-2 my-sm-0">My profile</button>
         
+
     </div>
 </nav>
+
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
 <article >
@@ -171,6 +174,9 @@ if(!isset($_COOKIE['jwt_tokens'])){
 <!-- Bootstrap JS and dependencies -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script src="script.js"></script>

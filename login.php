@@ -57,19 +57,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Send JWT token in response
             echo "<script>window.localStorage.setItem('jwt_tokens', '$jwt');</script>";
+            echo "<script>window.alert('Login successful');</script>";
+
 
             // After generating JWT token
             setcookie('jwt_tokens', $jwt, time() + (86400 * 30), "/"); // 86400 = 1 day
 
-            if (isset($_SESSION['search_query'])) {
-                $searchQuery = $_SESSION['search_query'];
-                header("Location: search_results.php?query=" . urlencode($searchQuery));
-                exit();
-            } else {
-                // Redirect to home_after_login.php if there's no stored search query
-                header("Location: home_after_login.php");
-                exit(); // Stop further execution of the script
-            }
+            // Redirect to home_after_login.php if there's no stored search query
+            header("Location: home_after_login.php");
+            exit(); // Stop further execution of the script
+            
 
         } else {
             // Incorrect password
@@ -141,7 +138,7 @@ $conn->close();
             <button type="submit">Login</button>
 
             <!-- Sign up link -->
-            <p class="register" style="color:black;">Not a member?  <a href="signup.php">Register here!</a></p>
+            <p class="register" style="color:black;">Not a member?  <a href="register.php">Register here!</a></p>
 
         </div>
 

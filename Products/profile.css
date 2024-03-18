@@ -1,0 +1,55 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: hsl(0, 0%, 95%); /* Light gray background */
+    text-align: center;
+}
+
+.profile {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #89baed; /* White background for profile section */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow: hidden; /* Ensure proper layout */
+}
+
+.profile-header {
+    align-items: center;
+}
+
+.profile-image {
+    width: 300px; /* Adjust image size as needed */
+    height: 300px;
+    border-radius: 50%; /* Make the image round */
+    margin-right: 20px; /* Space between image and username */
+}
+
+.username {
+    margin: 0; /* Remove default margin */
+    color: #333; /* Dark gray */
+}
+
+
+
+.profile-info p {
+    margin: 10px 0;
+}
+
+.logout-btn {
+    background-color: #dc3545; /* Red */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+

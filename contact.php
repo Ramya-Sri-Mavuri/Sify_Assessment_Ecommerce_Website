@@ -61,11 +61,18 @@
           <input type="text" placeholder="Enter your message">
         </div>
         <div class="button">
-          <input type="button" value="Send Now" >
+          <input id="message" type="submit" name="submit" value="Send Now" >
         </div>
       </form>
     </div>
     </div>
   </div>
+  <script>
+    document.getElementById('message').addEventListener('click', function(event) {
+    window.alert('Message sent');
+    document.getElementById('message').reset();
+    
+});
+  </script>
 </body>
 </html>

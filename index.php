@@ -27,7 +27,6 @@ header("Expires: Sat, 1 Jan 2000 00:00:00 GMT");
     </script>
     <script language="javascript" type="text/javascript">
     window.history.forward();
-    window.history.backward();
   </script>
 </head>
 <body>
@@ -65,9 +64,9 @@ header("Expires: Sat, 1 Jan 2000 00:00:00 GMT");
         </div>
         </form>
         <div class="cart-icon">
-            <img src="Images/Cart.jpg" alt="cart-icon" height="40" width="50" >
+        <a href="products/cart.php"><img src="Images/Cart.jpg" alt="cart-icon" height="40" width="50" ></a>
         </div>
-        <a class="btn btn-outline-primary my-2 my-sm-0" type="button" href="signup.php">Sign Up</a>
+        <a class="btn btn-outline-primary my-2 my-sm-0" type="button" href="register.php">Sign Up</a>
         <a class="btn btn-outline-primary my-2 my-sm-0" type="button" href="login.php">Login</a>
     </div>
 </nav>

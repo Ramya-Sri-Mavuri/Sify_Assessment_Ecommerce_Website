@@ -1,5 +1,5 @@
 <?php
-    require '../inc/dbcon.php';
+    require '../products/connection.php';
 
     function error422($message){
         $data=[
@@ -68,10 +68,11 @@
         $query_run=mysqli_query($conn,$query);
 
         if($query_run){
-
+            
             if(mysqli_num_rows($query_run)>0){
 
                 $res=mysqli_fetch_all($query_run,MYSQLI_ASSOC);
+                
                 $data=[
                     'status'=>200,
                     'message'=>'Customer List Fetched successfully',
