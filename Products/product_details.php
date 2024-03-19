@@ -65,7 +65,7 @@ if ($result->num_rows == 1) {
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="../home_after_login.php">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="../contact.php">Contact</a>
@@ -236,7 +236,7 @@ if ($result->num_rows == 1) {
         </h6>
         <form method='post'>
         <button onclick=\"alert('Product added to Cart')\" name='Add_To_Cart' style='background-color:#ffdb4d;border:none;border-radius:20px;height:40px;width:200px;margin-left:35px;margin-top:20px'>Add to Cart</button><br>
-        <button style='background-color:orange;border:none;border-radius:20px;height:40px;width:200px;margin-left:35px;margin-top:20px'>Buy Now</button>
+        <button class='buy-now-btn' style='background-color:orange;border:none;border-radius:20px;height:40px;width:200px;margin-left:35px;margin-top:20px'>Buy Now</button>
         </form>
         <h6 style='padding-top:15px;color:rgb(29, 100, 207);padding-bottom:10px;border-bottom:2px solid rgb(212, 208, 208);'><i class='fas fa-lock' style='font-size:18px;color:grey !important'></i>&nbsp;&nbsp;&nbsp;Secure transaction</h6>
         </div>";
@@ -248,7 +248,44 @@ if ($result->num_rows == 1) {
     }
     ?>
  </div>
-<main>
+</main>
+<div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <video src="https://cdnl.iconscout.com/lottie/premium/preview-watermark/tick-mark-5646462-4718796.mp4" autoplay="autoplay" muted="muted" loop="loop" playsinline="" type="video/mp4" height="200px"></video>
+            <center><p>Your Order Booked Successfully!</p></center>
+        </div>
+    </div>  
+    <script>
+        // Get the modal
+        var modal = document.getElementById('myModal');
+
+        // Get the button that opens the modal
+        var btns = document.querySelectorAll('.buy-now-btn');
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal
+        btns.forEach(function(btn) {
+            btn.onclick = function() {
+                event.preventDefault();
+                modal.style.display = "block";
+            }
+        });
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="script1.js"></script>
